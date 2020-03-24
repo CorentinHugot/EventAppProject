@@ -6,11 +6,28 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  TextInput
+  TextInput,
+  Button,
+  Input
 } from "react-native";
 import navigation from "react-navigation";
 import { BorderlessButton } from "react-native-gesture-handler";
-const theUsers = [{ email: "Test", mdp: "Test", pseudo: "Test" }];
+import firebase from "firebase";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyASIl4z25jSFdccwybL4ptG1rPUVRCIId0",
+  authDomain: "projetindivensc.firebaseapp.com",
+  databaseURL: "https://projetindivensc.firebaseio.com",
+  projectId: "projetindivensc",
+  storageBucket: "projetindivensc.appspot.com",
+  messagingSenderId: "1026864132271",
+  appId: "1:1026864132271:web:8121be6425726ed153a45a",
+  measurementId: "G-L6LB131YPD"
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 export default class Connexion extends React.Component {
   constructor(props) {
@@ -20,32 +37,36 @@ export default class Connexion extends React.Component {
       password: ""
     };
   }
-  _isUserValidated() {
-    let i = 0;
-    while (i < theUsers.length) {
-      if (theUsers[i].email == this.state.email) {
-        if (theUsers[i].mdp == this.state.password) {
-          return true;
-        }
-        return false;
-      }
-      i++;
+
+  signup = () => {
+    try {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .catch(error => {
+          alert("Inscription Success");
+        });
+    } catch (err) {
+      alert(err);
     }
-    return false;
-  }
-  onClickListener = viewId => {
-    let stringToPrint = viewId;
-    if (viewId == "Connexion" && this.state != null && this.state.email != "") {
-      //vérification de la combinaison email mot de passe
-      if (this._isUserValidated())
-        stringToPrint +=
-          "\n avec le mail :" + this.state.email + " " + this.state.password;
-      else {
-        stringToPrint += "\n Identifiants de connexion erronnés";
-      }
-    }
-    Alert.alert("Action sélectionnée", stringToPrint);
   };
+
+  signin = () => {
+    try {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.state.email, this.state.password)
+        .then(() =>
+          this.props.navigation.navigate("Accueil", { mail: this.state.email })
+        )
+        .catch(error => {
+          alert(error.message);
+        });
+    } catch (err) {
+      alert(err);
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -56,6 +77,7 @@ export default class Connexion extends React.Component {
           }}
         />
         <Text style={styles.titreApp}> MyEvent</Text>
+
         <View style={styles.inputContainer}>
           <Image
             style={styles.inputIcon}
@@ -65,7 +87,7 @@ export default class Connexion extends React.Component {
           />
           <TextInput
             style={styles.inputs}
-            placeholder="Pseudo"
+            placeholder="Email"
             keyboardType="email-address"
             underlineColorAndroid="transparent"
             onChangeText={email => this.setState({ email })}
@@ -80,27 +102,26 @@ export default class Connexion extends React.Component {
             }}
           />
           <TextInput
-            style={styles.inputs}
-            placeholder="Password"
-            secureTextEntry={true} /*caractères masqués mot de passe*/
+            placeholder="Mot de Passe (6 char min)"
+            secureTextEntry={true}
             underlineColorAndroid="transparent"
             onChangeText={password => this.setState({ password })}
           />
         </View>
-        <TouchableOpacity
-          style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => this.onClickListener("Connexion")}
-        >
-          <Text style={styles.loginText}>Connexion</Text>
-        </TouchableOpacity>
-        <View style={styles.mdpinscrit}>
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={() => this.onClickListener("Inscription")}
-          >
-            <Text>S'inscrire</Text>
-          </TouchableOpacity>
+
+        <View style={styles.container_row}>
+          <Button
+            style={styles.marge}
+            title="Se connecter"
+            onPress={() => this.signin()}
+          />
+          <Button
+            style={styles.marge}
+            title="S'inscrire"
+            onPress={() => this.signup()}
+          />
         </View>
+
         <TouchableOpacity
           style={[styles.button1Container, styles.loginButton]}
           onPress={() => {

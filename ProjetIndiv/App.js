@@ -47,6 +47,7 @@ const EventStack = createStackNavigator(
     Accueil: {
       screen: Home,
       navigationOptions: {
+        gestureEnabled: false,
         title: "Accueil"
       }
     },

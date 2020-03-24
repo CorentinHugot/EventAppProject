@@ -6,13 +6,22 @@ import navigation from "react-navigation";
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      mail: ""
+    };
+  }
+
+  componentWillMount() {
+    this.setState({
+      mail: this.props.navigation.state.params.mail
+    });
   }
 
   render() {
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
-        <Text style={styles.t1}> Bienvenue à toi : ... (Authentification)</Text>
+        <Text style={styles.t1}> Tu es connecté sous : {this.state.mail}</Text>
         <Image
           style={styles.inputImage}
           source={{
