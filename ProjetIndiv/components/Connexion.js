@@ -44,8 +44,9 @@ export default class Connexion extends React.Component {
         .auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
         .catch(error => {
-          alert("Inscription Success");
+          alert(error.message);
         });
+      alert("Inscription Success");
     } catch (err) {
       alert(err);
     }
@@ -109,27 +110,20 @@ export default class Connexion extends React.Component {
           />
         </View>
 
-        <View style={styles.container_row}>
+        <View style={styles.buttonContainer}>
           <Button
-            style={styles.marge}
+            style={styles.but}
             title="Se connecter"
             onPress={() => this.signin()}
           />
+        </View>
+        <View style={styles.buttonContainer}>
           <Button
-            style={styles.marge}
+            style={styles.but}
             title="S'inscrire"
             onPress={() => this.signup()}
           />
         </View>
-
-        <TouchableOpacity
-          style={[styles.button1Container, styles.loginButton]}
-          onPress={() => {
-            this.props.navigation.navigate("Accueil");
-          }}
-        >
-          <Text style={styles.loginText}>Se connecter en temps qu'invité</Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -140,6 +134,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#F5F5F5"
+  },
+  but: {
+    backgroundColor: "grey"
   },
   titreApp: {
     margin: 30,
@@ -184,27 +181,12 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   buttonContainer: {
+    borderBottomColor: "#F5FCFF",
+    backgroundColor: "white",
+    borderRadius: 30,
+    borderBottomWidth: 1,
     height: 45,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
     marginBottom: 20,
-    width: 150,
-    borderRadius: 10
-  },
-  button1Container: {
-    height: 45,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
-    width: 1000,
-    borderRadius: 10
-  },
-  loginButton: {
-    backgroundColor: "grey"
-  },
-  loginText: {
-    color: "white"
+    alignItems: "center"
   }
 });

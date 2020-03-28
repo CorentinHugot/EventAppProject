@@ -10,14 +10,11 @@ import {
 } from "react-native";
 import event from "../helpers/EventData";
 import EventListeItem from "./EventListeItem";
-
-import * as firebase from "firebase";
 import config from "../helpers/config.js";
 
 export default class ListeEventScreen extends React.Component {
   constructor(props) {
     super(props);
-    firebase.initializeApp(config);
   }
   render() {
     return (

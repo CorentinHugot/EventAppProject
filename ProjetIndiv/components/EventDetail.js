@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import navigation from "react-navigation";
 import { BorderlessButton } from "react-native-gesture-handler";
-
 import firebase from "firebase";
 
 const theUsers = [{ email: "Test", mdp: "Test", pseudo: "Test" }];
@@ -20,21 +19,15 @@ export default class EventDetail extends React.Component {
     super(props);
     this.state = { evenement: "" };
   }
-  componentWillMount() {
-    const ref = firebase.database().ref("evenement");
-    ref.on("value", snapshot => {
-      this.setState({
-        evenement: snapshot.val()
-      });
-    });
-  }
+  // componentWillMount() {
+  //   const ref = firebase.database().ref("evenement");
+  //   ref.on("value", snapshot => {
+  //     this.setState({
+  //       evenement: snapshot.val()
+  //     });
+  //   });
+  // }
   render() {
-    console.log(this.props.navigation);
-
-    // const events = this.state.evenement.map((event, i) => (
-    //   <Text key={i}>{event.titre}</Text>
-    // ));
-
     return (
       <View style={styles.main_container}>
         <View style={styles.container}>

@@ -21,32 +21,37 @@ export default class Home extends React.Component {
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
-        <Text style={styles.t1}> Tu es connecté sous : {this.state.mail}</Text>
-        <Image
-          style={styles.inputImage}
-          source={{
-            uri: "https://img.icons8.com/cute-clipart/64/000000/calendar"
-          }}
-        />
-        <View style={styles.contenu}>
-          <View style={styles.item}>
-            <Text> Ajouter un Evenement ? </Text>
+        <View style={styles.row}>
+          <Image
+            style={styles.inputImage}
+            source={{
+              uri: "https://img.icons8.com/cute-clipart/64/000000/calendar"
+            }}
+          />
+          <View style={styles.container1}>
+            <Text style={styles.titreApp}> MyEvent</Text>
+            <Text style={styles.t1}> Id : {this.state.mail}</Text>
+          </View>
+        </View>
+
+        <View style={styles.row}>
+          <View style={styles.container2}>
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate("AjouterEvent");
-              }} /*navigation={this.props.navigation}*/
+              }}
             >
+              <Text> Ajouter un Evenement ? </Text>
               <Ionicons name={"ios-add-circle"} size={60} color={"blue"} />
             </TouchableOpacity>
           </View>
-          <View style={styles.item}>
-            <Text> Afficher mes events </Text>
+          <View style={styles.container2}>
             <TouchableOpacity
-              style={styles.contenu}
               onPress={() => {
                 this.props.navigation.navigate("ListeEvent");
-              }} /*navigation={this.props.navigation}*/
+              }}
             >
+              <Text> Afficher mes events </Text>
               <Ionicons name={"ios-menu"} size={60} color={"green"} />
             </TouchableOpacity>
           </View>
@@ -59,7 +64,22 @@ export default class Home extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#F5F5F5"
+  },
+  container2: {
+    flex: 1,
+    margin: 5,
+    backgroundColor: "cadetblue",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 20
   },
   t1: {
     textAlign: "center",
@@ -73,14 +93,62 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexDirection: "row"
   },
-  contenu: {
-    flexDirection: "row",
-    margin: 15,
-    alignItems: "center"
-  },
   item: {
     margin: 10,
     alignItems: "center",
     backgroundColor: "grey"
+  },
+
+  but: {
+    backgroundColor: "grey"
+  },
+  titreApp: {
+    fontSize: 40
+  },
+  mdpinscrit: {
+    flexDirection: "row"
+  },
+  gras: {
+    fontWeight: "bold"
+  },
+  inputImage: {
+    borderBottomWidth: 1,
+    width: 100,
+    height: 100,
+    marginBottom: 20,
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  inputContainer: {
+    borderBottomColor: "#F5FCFF",
+    backgroundColor: "white",
+    borderRadius: 30,
+    borderBottomWidth: 1,
+    width: 250,
+    height: 45,
+    marginBottom: 20,
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  inputs: {
+    height: 45,
+    marginLeft: 16,
+    borderBottomColor: "#FFFFFF",
+    flex: 1
+  },
+  inputIcon: {
+    width: 30,
+    height: 30,
+    marginLeft: 15,
+    justifyContent: "center"
+  },
+  buttonContainer: {
+    borderBottomColor: "#F5FCFF",
+    backgroundColor: "white",
+    borderRadius: 30,
+    borderBottomWidth: 1,
+    height: 45,
+    marginBottom: 20,
+    alignItems: "center"
   }
 });
