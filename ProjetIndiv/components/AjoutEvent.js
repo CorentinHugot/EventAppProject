@@ -13,30 +13,42 @@ import firebase from "firebase";
 export default class AjoutEvent extends React.Component {
   constructor(props) {
     super(props);
-    state = {
+    this.state = {
       titreEvent: "",
-      dateEvent: ""
+      dateEvent: "",
+      id: "",
+      evenement: ""
     };
   }
 
+  componentWillMount = () => {
+    const ref = firebase.database().ref("events");
+    ref.on("value", snapshot => {
+      this.setState({ evenement: snapshot.val() });
+      this.setState({ id: this.state.evenement.length });
+    });
+  };
+
   _createEvent() {
-    firebase
-      .database()
-      .ref("events/")
-      .set({
-        title: this.state.titreEvent,
-        date: this.state.dateEvent
-      })
-      .alert(() => {
-        console.log("Evenement Créé dans ta BDD frr");
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    try {
+      firebase
+        .database()
+        .ref("events/" + this.state.id)
+        .set({
+          title: this.state.titreEvent,
+          date: this.state.dateEvent
+        })
+        .catch(error => {
+          alert(error.message);
+        });
+    } catch (error) {
+      alert(error);
+    }
+    alert("Event créé !");
   }
 
   render() {
-    console.log(firebase);
+    console.log(this.state.id);
     return (
       <View style={styles.container}>
         <Text style={styles.titreApp}>Création d'un Evenement</Text>
@@ -60,7 +72,11 @@ export default class AjoutEvent extends React.Component {
         </View>
         <TouchableOpacity
           style={styles.buton}
-          onPress={() => this._createEvent()}
+          onPress={() => {
+            this._createEvent();
+            this.setState({ id: this.state.id + 1 });
+            console.log(this.state.id);
+          }}
         >
           <View>
             <Text>Créer mon event</Text>
@@ -79,8 +95,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F5F5"
   },
   buton: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 150,
+    height: 50,
     backgroundColor: "blue",
-    margin: 20
+    margin: 30
   },
   row: {
     flexDirection: "row",
@@ -89,6 +109,6 @@ const styles = StyleSheet.create({
   },
   titreApp: {
     margin: 20,
-    fontSize: 40
+    fontSize: 30
   }
 });

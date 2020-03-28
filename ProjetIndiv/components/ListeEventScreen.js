@@ -11,11 +11,23 @@ import {
 import event from "../helpers/EventData";
 import EventListeItem from "./EventListeItem";
 import config from "../helpers/config.js";
+import firebase from "firebase";
 
 export default class ListeEventScreen extends React.Component {
   constructor(props) {
     super(props);
+    state = {
+      event: []
+    };
   }
+
+  componentWillMount = () => {
+    const ref = firebase.database().ref("events");
+    ref.on("value", snapshot => {
+      this.setState({ event: snapshot.val() });
+    });
+  };
+
   render() {
     return (
       <View style={styles.main_container}>
@@ -32,6 +44,21 @@ export default class ListeEventScreen extends React.Component {
             </TouchableOpacity>
           )}
         />
+        <Text style={styles.margin}>
+          Ici date de l'event 0 : {event[0].date}
+        </Text>
+
+        <FlatList
+          data={this.state.event}
+          keyExtractor={item => item.title}
+          renderItem={({ item }) => (
+            <TouchableOpacity>
+              <Text>
+                Titre : {item.title} et date : {item.date}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
       </View>
     );
   }
@@ -40,5 +67,8 @@ export default class ListeEventScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  margin: {
+    margin: 50
   }
 });

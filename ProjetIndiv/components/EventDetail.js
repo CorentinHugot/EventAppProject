@@ -12,8 +12,6 @@ import navigation from "react-navigation";
 import { BorderlessButton } from "react-native-gesture-handler";
 import firebase from "firebase";
 
-const theUsers = [{ email: "Test", mdp: "Test", pseudo: "Test" }];
-
 export default class EventDetail extends React.Component {
   constructor(props) {
     super(props);
