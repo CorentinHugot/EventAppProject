@@ -50,11 +50,11 @@ export default class ListeEventScreen extends React.Component {
 
         <FlatList
           data={this.state.event}
-          keyExtractor={item => item.title}
+          keyExtractor={item => item.titre}
           renderItem={({ item }) => (
             <TouchableOpacity>
               <Text>
-                Titre : {item.title} et date : {item.date}
+                Titre : {item.titre} et date : {item.date}
               </Text>
             </TouchableOpacity>
           )}
