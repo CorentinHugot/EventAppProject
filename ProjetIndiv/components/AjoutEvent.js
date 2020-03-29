@@ -25,7 +25,7 @@ export default class AjoutEvent extends React.Component {
     const ref = firebase.database().ref("events");
     ref.on("value", snapshot => {
       this.setState({ id: snapshot.numChildren() });
-      // this.setState({ id: this.state.evenement.length + 1 });
+      // this.setState({ id: this.state.evenement.length + 1 }); c'est de la merde ce truc le num children fait ca oklm
     });
   };
 
@@ -35,7 +35,7 @@ export default class AjoutEvent extends React.Component {
         .database()
         .ref("events/" + this.state.id)
         .set({
-          title: this.state.titreEvent,
+          titre: this.state.titreEvent,
           date: this.state.dateEvent
         })
         .catch(error => {
@@ -74,8 +74,6 @@ export default class AjoutEvent extends React.Component {
           style={styles.buton}
           onPress={() => {
             this._createEvent();
-            // this.setState({ id: this.state.id + 1 });
-            // console.log(this.state.id);
           }}
         >
           <View>
