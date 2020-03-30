@@ -57,6 +57,12 @@ const EventStack = createStackNavigator(
         title: "Ajouter un Event"
       }
     },
+    Simulator: {
+      screen: Simulateur,
+      navigationOptions: {
+        title: "Simulator"
+      }
+    },
 
     ListeEvent: {
       screen: ListeEventScreen

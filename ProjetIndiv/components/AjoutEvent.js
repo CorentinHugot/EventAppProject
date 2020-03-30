@@ -80,6 +80,16 @@ export default class AjoutEvent extends React.Component {
             <Text>Créer mon event</Text>
           </View>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buton}
+          onPress={() => {
+            this.props.navigation.navigate("Simulator");
+          }}
+        >
+          <View>
+            <Text>Accéder au simulateur</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }
