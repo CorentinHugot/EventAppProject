@@ -8,7 +8,6 @@ import {
   Image,
   FlatList
 } from "react-native";
-import event from "../helpers/EventData";
 import EventListeItem from "./EventListeItem";
 import firebase from "firebase";
 
@@ -27,12 +26,14 @@ export default class ListeEventScreen extends React.Component {
     });
   };
 
+  _deleteEvent = () => {};
+
   render() {
     return (
       <View style={styles.main_container}>
-        <FlatList
-          data={event}
-          keyExtractor={item => item.id.toString()}
+        {/* <FlatList
+          data={this.state.event}
+          keyExtractor={item => item.item.titre}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => {
@@ -42,22 +43,39 @@ export default class ListeEventScreen extends React.Component {
               <EventListeItem event={item} />
             </TouchableOpacity>
           )}
-        />
-        <Text style={styles.margin}>
-          Ici date de l'event 0 : {event[0].date}
-        </Text>
+        /> */}
 
         <FlatList
           data={this.state.event}
           keyExtractor={item => item.titre}
           renderItem={({ item }) => (
             <TouchableOpacity>
-              <Text>
-                Titre : {item.titre} et date : {item.date}
-              </Text>
+              <EventListeItem event={item} />
             </TouchableOpacity>
           )}
         />
+        <View style={styles.row}>
+          <TouchableOpacity
+            style={styles.buton}
+            onPress={() => {
+              this._deleteEvent(); //à creer
+            }}
+          >
+            <View>
+              <Text>Supprimer</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buton}
+            onPress={() => {
+              this.props.navigation.navigate("DetailEvent", { item });
+            }}
+          >
+            <View>
+              <Text>Détail</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -68,6 +86,18 @@ const styles = StyleSheet.create({
     flex: 1
   },
   margin: {
-    margin: 50
+    margin: 20
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  buton: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 150,
+    height: 50,
+    backgroundColor: "blue",
+    margin: 20
   }
 });
