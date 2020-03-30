@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import event from "../helpers/EventData";
 import EventListeItem from "./EventListeItem";
-import config from "../helpers/config.js";
 import firebase from "firebase";
 
 export default class ListeEventScreen extends React.Component {

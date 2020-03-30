@@ -91,7 +91,7 @@ export default class AjoutEvent extends React.Component {
             style={styles.input}
             placeholder="Agents sécu"
             underlineColorAndroid="transparent"
-            onChangeText={dateEvent => this.setState({ agents })}
+            onChangeText={agents => this.setState({ agents })}
           />
         </View>
         <View style={styles.row}>
@@ -100,7 +100,7 @@ export default class AjoutEvent extends React.Component {
             style={styles.input}
             placeholder="1 pour 40 pers"
             underlineColorAndroid="transparent"
-            onChangeText={dateEvent => this.setState({ navettes })}
+            onChangeText={navettes => this.setState({ navettes })}
           />
         </View>
         <TouchableOpacity
