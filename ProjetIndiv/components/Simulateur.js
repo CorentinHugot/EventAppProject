@@ -15,20 +15,19 @@ export default class AjoutEvent extends React.Component {
     this.state = {
       nbpersonne: "",
       agent: "",
-      navettes: "",
-      simu: ""
+      navettes: ""
     };
   }
 
   _calculSimu() {
-    this.setState({ agent: nbpersonne / 50 + 2 });
-    this.setState({ navettes: nbpersonne / 40 });
+    this.setState({ agent: this.state.nbpersonne / 50 + 2 }); //Math.round()
+    this.setState({ navettes: this.state.nbpersonne / 40 });
     this.setState({
       simu:
-        "Nous te recommandons" +
-        agent +
+        "Nous te recommandons " +
+        this.state.agent +
         "agents et " +
-        navettes +
+        this.state.navettes +
         "navettes (40pers/bus) pour ton event !"
     });
   }
@@ -40,13 +39,13 @@ export default class AjoutEvent extends React.Component {
           Cette page t'assiste dans le choix du nombre d'agents de sécurités et
           de navettes pour ton event !
         </Text>
-        <View style={styles.row}>
+        <View style={styles.box}>
           <Text> Combien de personnes prévois tu à ton evenement ?</Text>
           <TextInput
             style={styles.input}
             placeholder="Nb personnes"
             underlineColorAndroid="transparent"
-            onChangeText={titreEvent => this.setState({ nbpersonne })}
+            onChangeText={nbpersonne => this.setState({ nbpersonne })}
           />
         </View>
         <TouchableOpacity
@@ -60,7 +59,8 @@ export default class AjoutEvent extends React.Component {
           </View>
         </TouchableOpacity>
         <View>
-          <Text>{this.state.simu}</Text>
+          <Text>Agents : {this.state.agent}</Text>
+          <Text>Navettes : {this.state.navettes}</Text>
         </View>
       </View>
     );
@@ -86,6 +86,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 20
+  },
+  box: {
+    alignItems: "center",
+    textAlign: "center",
+    justifyContent: "center",
+    marginLeft: 20,
+    width: 200
   },
   titreApp: {
     margin: 20,

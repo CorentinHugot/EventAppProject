@@ -16,6 +16,9 @@ export default class AjoutEvent extends React.Component {
     this.state = {
       titreEvent: "",
       dateEvent: "",
+      lieuEvent: "",
+      agents: "",
+      navettes: "",
       id: 0,
       evenement: ""
     };
@@ -36,7 +39,10 @@ export default class AjoutEvent extends React.Component {
         .ref("events/" + this.state.id)
         .set({
           titre: this.state.titreEvent,
-          date: this.state.dateEvent
+          date: this.state.dateEvent,
+          lieu: this.state.lieuEvent,
+          nbagents: this.state.agents,
+          nbnavettes: this.state.navettes
         })
         .catch(error => {
           alert(error.message);
@@ -62,12 +68,39 @@ export default class AjoutEvent extends React.Component {
           />
         </View>
         <View style={styles.row}>
+          <Text> Lieu </Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Lieu"
+            underlineColorAndroid="transparent"
+            onChangeText={lieuEvent => this.setState({ lieuEvent })}
+          />
+        </View>
+        <View style={styles.row}>
           <Text> Date : </Text>
           <TextInput
             style={styles.input}
             placeholder="../../...."
             underlineColorAndroid="transparent"
             onChangeText={dateEvent => this.setState({ dateEvent })}
+          />
+        </View>
+        <View style={styles.row}>
+          <Text> Agents </Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Agents sécu"
+            underlineColorAndroid="transparent"
+            onChangeText={dateEvent => this.setState({ agents })}
+          />
+        </View>
+        <View style={styles.row}>
+          <Text> Navettes : </Text>
+          <TextInput
+            style={styles.input}
+            placeholder="1 pour 40 pers"
+            underlineColorAndroid="transparent"
+            onChangeText={dateEvent => this.setState({ navettes })}
           />
         </View>
         <TouchableOpacity

@@ -7,7 +7,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import Connexion from "./components/Connexion";
 import EventDetail from "./components/EventDetail";
-
+import Simulator from "./components/Simulateur";
 const defaultNavigationOptions = {
   headerStyle: {
     backgroundColor: "white"
@@ -58,12 +58,11 @@ const EventStack = createStackNavigator(
       }
     },
     Simulator: {
-      screen: Simulateur,
+      screen: Simulator,
       navigationOptions: {
         title: "Simulator"
       }
     },
-
     ListeEvent: {
       screen: ListeEventScreen
     },
