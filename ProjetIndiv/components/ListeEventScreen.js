@@ -15,10 +15,21 @@ import firebase from "firebase";
 export default class ListeEventScreen extends React.Component {
   constructor(props) {
     super(props);
-    state = {
+    this.state = {
+      press: false,
       event: [],
     };
   }
+
+  _onPress = (item) => {
+    const { onPress } = this.props;
+    if (this.state.press == false) {
+      this.setState({ press: true });
+    } else {
+      this.setState({ press: false });
+    }
+    onPress(item);
+  };
 
   componentWillMount = () => {
     const ref = firebase.database().ref("events");
@@ -34,25 +45,14 @@ export default class ListeEventScreen extends React.Component {
   render() {
     return (
       <View style={styles.main_container}>
-        {/* <FlatList
-          data={this.state.event}
-          keyExtractor={item => item.item.titre}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("DetailEvent", { item });
-              }}
-            >
-              <EventListeItem event={item} />
-            </TouchableOpacity>
-          )}
-        /> */}
-
         <FlatList
           data={this.state.event}
           keyExtractor={(item) => item.titre}
           renderItem={({ item }) => (
-            <TouchableOpacity>
+            <TouchableOpacity
+              style={[this.state.press ? { backgroundColor: "slategray" } : {}]}
+              onPress={this._onPress}
+            >
               <EventListeItem event={item} />
             </TouchableOpacity>
           )}
@@ -100,6 +100,12 @@ const styles = StyleSheet.create({
   },
   margin: {
     margin: 20,
+  },
+  btnTxt: {
+    textAlign: "center",
+    justifyContent: "center",
+    color: "floralwhite",
+    padding: 15,
   },
   row: {
     flexDirection: "row",
