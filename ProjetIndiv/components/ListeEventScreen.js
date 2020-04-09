@@ -6,27 +6,30 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  FlatList
+  FlatList,
 } from "react-native";
 import EventListeItem from "./EventListeItem";
+import ModifEvent from "./ModifEvent";
 import firebase from "firebase";
 
 export default class ListeEventScreen extends React.Component {
   constructor(props) {
     super(props);
     state = {
-      event: []
+      event: [],
     };
   }
 
   componentWillMount = () => {
     const ref = firebase.database().ref("events");
-    ref.on("value", snapshot => {
+    ref.on("value", (snapshot) => {
       this.setState({ event: snapshot.val() });
     });
   };
 
-  _deleteEvent = () => {};
+  _deleteEvent = () => {
+    firebase.database().ref("event/idevent").remove();
+  };
 
   render() {
     return (
@@ -47,7 +50,7 @@ export default class ListeEventScreen extends React.Component {
 
         <FlatList
           data={this.state.event}
-          keyExtractor={item => item.titre}
+          keyExtractor={(item) => item.titre}
           renderItem={({ item }) => (
             <TouchableOpacity>
               <EventListeItem event={item} />
@@ -68,14 +71,24 @@ export default class ListeEventScreen extends React.Component {
           <TouchableOpacity
             style={styles.buton}
             onPress={() => {
-              this.props.navigation.navigate("DetailEvent", { item });
+              this.props.navigation.navigate("ModifEvent", { item });
             }}
           >
             <View>
-              <Text>Détail</Text>
+              <Text>Modifier</Text>
             </View>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          style={styles.buton}
+          onPress={() => {
+            this.props.navigation.navigate("DetailEvent", { item });
+          }}
+        >
+          <View>
+            <Text>Détail</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -83,14 +96,14 @@ export default class ListeEventScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   margin: {
-    margin: 20
+    margin: 20,
   },
   row: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   buton: {
     justifyContent: "center",
@@ -98,6 +111,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 50,
     backgroundColor: "blue",
-    margin: 20
-  }
+    margin: 20,
+  },
 });

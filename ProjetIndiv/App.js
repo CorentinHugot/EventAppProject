@@ -8,14 +8,16 @@ import { createAppContainer } from "react-navigation";
 import Connexion from "./components/Connexion";
 import EventDetail from "./components/EventDetail";
 import Simulator from "./components/Simulateur";
+import ModifEvent from "./components/ModifEvent";
+
 const defaultNavigationOptions = {
   headerStyle: {
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   headerTintColor: "black",
   headerTitleStyle: {
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 };
 
 export default class App extends React.Component {
@@ -32,8 +34,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
 
 const EventStack = createStackNavigator(
@@ -41,37 +43,40 @@ const EventStack = createStackNavigator(
     ConnectesToi: {
       screen: Connexion,
       navigationOptions: {
-        title: "Connecte Toi !"
-      }
+        title: "Connecte Toi !",
+      },
     },
     Accueil: {
       screen: Home,
       navigationOptions: {
         headerLeft: null,
-        title: "Accueil"
-      }
+        title: "Accueil",
+      },
     },
     AjouterEvent: {
       screen: AjoutEvent,
       navigationOptions: {
-        title: "Ajouter un Event"
-      }
+        title: "Ajouter un Event",
+      },
     },
     Simulator: {
       screen: Simulator,
       navigationOptions: {
-        title: "Simulator"
-      }
+        title: "Simulator",
+      },
     },
     ListeEvent: {
-      screen: ListeEventScreen
+      screen: ListeEventScreen,
+    },
+    ModifEvent: {
+      screen: ModifEvent,
     },
     DetailEvent: {
-      screen: EventDetail
-    }
+      screen: EventDetail,
+    },
   },
   {
-    defaultNavigationOptions: defaultNavigationOptions
+    defaultNavigationOptions: defaultNavigationOptions,
   }
 );
 
