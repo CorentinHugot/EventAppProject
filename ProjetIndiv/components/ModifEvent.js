@@ -45,7 +45,10 @@ export default class ModifEvent extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.titreApp}>Modifier mon Evenement</Text>
+        <Text style={styles.titreApp}>
+          Tu souhaites modifer l'event{" "}
+          {this.props.navigation.state.params.titreEvent} ?
+        </Text>
         <View style={styles.row}>
           <Text> Nom de l'event : </Text>
           <TextInput

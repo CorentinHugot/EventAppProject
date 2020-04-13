@@ -73,6 +73,9 @@ const EventStack = createStackNavigator(
     },
     DetailEvent: {
       screen: EventDetail,
+      navigationOptions: {
+        title: "DetailEvent",
+      },
     },
   },
   {
