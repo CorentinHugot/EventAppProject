@@ -70,6 +70,9 @@ const EventStack = createStackNavigator(
     },
     ModifEvent: {
       screen: ModifEvent,
+      navigationOptions: {
+        title: "ModifEvent",
+      },
     },
     DetailEvent: {
       screen: EventDetail,

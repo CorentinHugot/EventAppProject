@@ -17,7 +17,7 @@ export default class ListeEventScreen extends React.Component {
     this.state = { event: [] };
   }
 
-  componentWillMount = () => {
+  UNSAFE_componentWillMount = () => {
     //je viens récupérer la liste des events de la bdd
     const ref = firebase.database().ref("events");
     ref.on("value", (snapshot) => {

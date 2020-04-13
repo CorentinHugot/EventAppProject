@@ -15,19 +15,28 @@ import firebase from "firebase";
 export default class EventDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { event: [] };
+    this.state = { event: [], idEvent: "" };
   }
 
-  componentWillMount = () => {
+  UNSAFE_componentWillMount = () => {
     //je viens récupérer la liste des events de la bdd
     const ref = firebase.database().ref("events");
     ref.on("value", (snapshot) => {
       this.setState({ event: snapshot.val() });
     });
+    // je viens chercher l'id de l'event dans lequel je me trouve
+    ref
+      .orderByChild("titre")
+      .equalTo(this.props.navigation.state.params.item.titre)
+      .on("value", (snapshot) => {
+        result = snapshot.val();
+        key = Object.keys(result);
+        this.setState({ idEvent: key });
+      });
   };
 
-  _deleteEvent = () => {
-    firebase.database().ref("event/idevent").remove();
+  _deleteEvent = (event) => {
+    firebase.database().ref(event).remove();
   };
 
   render() {
@@ -35,19 +44,19 @@ export default class EventDetail extends React.Component {
       <View style={styles.main_container}>
         <View style={styles.container}>
           <Text>
-            la tu utilises les données deg !
-            {this.props.navigation.state.params.item.titre}
+            Titre de l'event :{this.props.navigation.state.params.item.titre}
           </Text>
-        </View>
-        <View style={styles.container}>
-          <Text>après la c'est du test firebase :</Text>
-          <Text>Nombre d'events {this.state.event.length}</Text>
+          <Text>Id de l'event : {this.state.idEvent}</Text>
         </View>
         <View style={styles.row}>
           <TouchableOpacity
             style={styles.buton}
             onPress={() => {
-              this._deleteEvent(); //à creer
+              this._deleteEvent("events/" + this.state.idEvent).alert(
+                error.message
+              );
+              alert("Evenement Supprimé");
+              this.props.navigation.navigate("ListeEvent");
             }}
           >
             <View>
@@ -74,9 +83,11 @@ export default class EventDetail extends React.Component {
 
 const styles = StyleSheet.create({
   main_container: {
-    height: 125,
+    flex: 1,
   },
   container: {
+    margin: 20,
+    alignItems: "center",
     flex: 1,
   },
 

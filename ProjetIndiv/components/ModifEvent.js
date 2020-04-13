@@ -24,7 +24,7 @@ export default class ModifEvent extends React.Component {
     };
   }
 
-  componentWillMount = () => {
+  UNSAFE_componentWillMount = () => {
     const ref = firebase.database().ref("events");
     ref.on("value", (snapshot) => {
       this.setState({ id: snapshot.numChildren() });

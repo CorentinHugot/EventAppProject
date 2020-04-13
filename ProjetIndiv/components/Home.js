@@ -7,13 +7,13 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mail: ""
+      mail: "",
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.setState({
-      mail: this.props.navigation.state.params.mail
+      mail: this.props.navigation.state.params.mail,
     });
   }
 
@@ -25,7 +25,7 @@ export default class Home extends React.Component {
           <Image
             style={styles.inputImage}
             source={{
-              uri: "https://img.icons8.com/cute-clipart/64/000000/calendar"
+              uri: "https://img.icons8.com/cute-clipart/64/000000/calendar",
             }}
           />
           <View style={styles.container1}>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5F5F5"
+    backgroundColor: "#F5F5F5",
   },
   container2: {
     flex: 1,
@@ -74,42 +74,42 @@ const styles = StyleSheet.create({
     backgroundColor: "cadetblue",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 20
+    borderRadius: 20,
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginLeft: 20
+    marginLeft: 20,
   },
   t1: {
     textAlign: "center",
     margin: 10,
-    fontSize: 20
+    fontSize: 20,
   },
   inputImage: {
     alignItems: "center",
     width: 100,
     height: 100,
     marginBottom: 20,
-    flexDirection: "row"
+    flexDirection: "row",
   },
   item: {
     margin: 10,
     alignItems: "center",
-    backgroundColor: "grey"
+    backgroundColor: "grey",
   },
 
   but: {
-    backgroundColor: "grey"
+    backgroundColor: "grey",
   },
   titreApp: {
-    fontSize: 40
+    fontSize: 40,
   },
   mdpinscrit: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   gras: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   inputImage: {
     borderBottomWidth: 1,
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     height: 100,
     marginBottom: 20,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   inputContainer: {
     borderBottomColor: "#F5FCFF",
@@ -128,19 +128,19 @@ const styles = StyleSheet.create({
     height: 45,
     marginBottom: 20,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   inputs: {
     height: 45,
     marginLeft: 16,
     borderBottomColor: "#FFFFFF",
-    flex: 1
+    flex: 1,
   },
   inputIcon: {
     width: 30,
     height: 30,
     marginLeft: 15,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   buttonContainer: {
     borderBottomColor: "#F5FCFF",
@@ -149,6 +149,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     height: 45,
     marginBottom: 20,
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });

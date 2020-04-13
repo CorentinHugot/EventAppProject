@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  TextInput
+  TextInput,
 } from "react-native";
 import firebase from "firebase";
 
@@ -20,13 +20,13 @@ export default class AjoutEvent extends React.Component {
       agents: "",
       navettes: "",
       id: 0,
-      evenement: ""
+      evenement: "",
     };
   }
 
-  componentWillMount = () => {
+  UNSAFE_componentWillMount = () => {
     const ref = firebase.database().ref("events");
-    ref.on("value", snapshot => {
+    ref.on("value", (snapshot) => {
       this.setState({ id: snapshot.numChildren() });
       // this.setState({ id: this.state.evenement.length + 1 }); c'est de la merde ce truc le num children fait ca oklm
     });
@@ -42,9 +42,9 @@ export default class AjoutEvent extends React.Component {
           date: this.state.dateEvent,
           lieu: this.state.lieuEvent,
           nbagents: this.state.agents,
-          nbnavettes: this.state.navettes
+          nbnavettes: this.state.navettes,
         })
-        .catch(error => {
+        .catch((error) => {
           alert(error.message);
         });
     } catch (error) {
@@ -64,7 +64,7 @@ export default class AjoutEvent extends React.Component {
             style={styles.input}
             placeholder="Nom event"
             underlineColorAndroid="transparent"
-            onChangeText={titreEvent => this.setState({ titreEvent })}
+            onChangeText={(titreEvent) => this.setState({ titreEvent })}
           />
         </View>
         <View style={styles.row}>
@@ -73,7 +73,7 @@ export default class AjoutEvent extends React.Component {
             style={styles.input}
             placeholder="Lieu"
             underlineColorAndroid="transparent"
-            onChangeText={lieuEvent => this.setState({ lieuEvent })}
+            onChangeText={(lieuEvent) => this.setState({ lieuEvent })}
           />
         </View>
         <View style={styles.row}>
@@ -82,7 +82,7 @@ export default class AjoutEvent extends React.Component {
             style={styles.input}
             placeholder="../../...."
             underlineColorAndroid="transparent"
-            onChangeText={dateEvent => this.setState({ dateEvent })}
+            onChangeText={(dateEvent) => this.setState({ dateEvent })}
           />
         </View>
         <View style={styles.row}>
@@ -91,7 +91,7 @@ export default class AjoutEvent extends React.Component {
             style={styles.input}
             placeholder="Agents sécu"
             underlineColorAndroid="transparent"
-            onChangeText={agents => this.setState({ agents })}
+            onChangeText={(agents) => this.setState({ agents })}
           />
         </View>
         <View style={styles.row}>
@@ -100,7 +100,7 @@ export default class AjoutEvent extends React.Component {
             style={styles.input}
             placeholder="1 pour 40 pers"
             underlineColorAndroid="transparent"
-            onChangeText={navettes => this.setState({ navettes })}
+            onChangeText={(navettes) => this.setState({ navettes })}
           />
         </View>
         <TouchableOpacity
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5F5F5"
+    backgroundColor: "#F5F5F5",
   },
   buton: {
     justifyContent: "center",
@@ -141,15 +141,15 @@ const styles = StyleSheet.create({
     width: 150,
     height: 50,
     backgroundColor: "blue",
-    margin: 30
+    margin: 30,
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginLeft: 20
+    marginLeft: 20,
   },
   titreApp: {
     margin: 20,
-    fontSize: 30
-  }
+    fontSize: 30,
+  },
 });
