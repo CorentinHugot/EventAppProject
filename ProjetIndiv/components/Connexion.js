@@ -8,7 +8,7 @@ import {
   Image,
   TextInput,
   Button,
-  Input
+  Input,
 } from "react-native";
 import navigation from "react-navigation";
 import { BorderlessButton } from "react-native-gesture-handler";
@@ -22,7 +22,7 @@ const firebaseConfig = {
   storageBucket: "projetindivensc.appspot.com",
   messagingSenderId: "1026864132271",
   appId: "1:1026864132271:web:8121be6425726ed153a45a",
-  measurementId: "G-L6LB131YPD"
+  measurementId: "G-L6LB131YPD",
 };
 
 if (!firebase.apps.length) {
@@ -34,7 +34,7 @@ export default class Connexion extends React.Component {
     super(props);
     state = {
       email: "",
-      password: ""
+      password: "",
     };
   }
 
@@ -43,10 +43,10 @@ export default class Connexion extends React.Component {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .catch(error => {
+        .catch((error) => {
           alert(error.message);
         });
-      alert("Inscription Success");
+      alert("Inscription réussie ! Connectes toi maintenant.");
     } catch (err) {
       alert(err);
     }
@@ -60,7 +60,7 @@ export default class Connexion extends React.Component {
         .then(() =>
           this.props.navigation.navigate("Accueil", { mail: this.state.email })
         )
-        .catch(error => {
+        .catch((error) => {
           alert(error.message);
         });
     } catch (err) {
@@ -70,11 +70,11 @@ export default class Connexion extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.main_container}>
         <Image
           style={styles.inputImage}
           source={{
-            uri: "https://img.icons8.com/cute-clipart/64/000000/calendar"
+            uri: "https://img.icons8.com/cute-clipart/64/000000/calendar",
           }}
         />
         <Text style={styles.titreApp}> MyEvent</Text>
@@ -83,7 +83,7 @@ export default class Connexion extends React.Component {
           <Image
             style={styles.inputIcon}
             source={{
-              uri: "https://img.icons8.com/bubbles/50/000000/standing-man.png"
+              uri: "https://img.icons8.com/bubbles/50/000000/standing-man.png",
             }}
           />
           <TextInput
@@ -91,7 +91,7 @@ export default class Connexion extends React.Component {
             placeholder="Email"
             keyboardType="email-address"
             underlineColorAndroid="transparent"
-            onChangeText={email => this.setState({ email })}
+            onChangeText={(email) => this.setState({ email })}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -99,64 +99,72 @@ export default class Connexion extends React.Component {
             style={styles.inputIcon}
             source={{
               uri:
-                "https://img.icons8.com/cute-clipart/64/000000/cancel-4-digits.png"
+                "https://img.icons8.com/cute-clipart/64/000000/cancel-4-digits.png",
             }}
           />
           <TextInput
             placeholder="Mot de Passe (6 char min)"
             secureTextEntry={true}
             underlineColorAndroid="transparent"
-            onChangeText={password => this.setState({ password })}
+            onChangeText={(password) => this.setState({ password })}
           />
         </View>
-
-        <View style={styles.buttonContainer}>
-          <Button
-            style={styles.but}
-            title="Se connecter"
-            onPress={() => this.signin()}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            style={styles.but}
-            title="S'inscrire"
-            onPress={() => this.signup()}
-          />
+        <View>
+          <View style={styles.but}>
+            <Button
+              title="Connection"
+              color="#008B8B"
+              onPress={() => this.signin()}
+            />
+          </View>
+          <View style={styles.but}>
+            <Button
+              style={styles.but}
+              title="Inscription"
+              color="#008B8B"
+              onPress={() => this.signup()}
+            />
+          </View>
         </View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
+  main_container: {
+    flex: 1,
+    margin: "auto",
+    alignItems: "center",
+    backgroundColor: "#E8F6F3",
+    justifyContent: "center",
+  },
+  inputImage: {
+    width: 150,
+    height: 120,
+  },
+  but: {
+    margin: 10,
+  },
+
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5F5F5"
+    backgroundColor: "#F5F5F5",
   },
-  but: {
-    backgroundColor: "grey"
-  },
+
   titreApp: {
-    margin: 30,
-    marginTop: -30,
-    fontSize: 70
+    margin: 10,
+    fontSize: 70,
+    color: "#008B8B",
   },
   mdpinscrit: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   gras: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
-  inputImage: {
-    borderBottomWidth: 1,
-    width: 100,
-    height: 100,
-    marginBottom: 20,
-    flexDirection: "row",
-    alignItems: "center"
-  },
+
   inputContainer: {
     borderBottomColor: "#F5FCFF",
     backgroundColor: "white",
@@ -166,27 +174,18 @@ const styles = StyleSheet.create({
     height: 45,
     marginBottom: 20,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   inputs: {
     height: 45,
     marginLeft: 16,
     borderBottomColor: "#FFFFFF",
-    flex: 1
+    flex: 1,
   },
   inputIcon: {
     width: 30,
     height: 30,
     marginLeft: 15,
-    justifyContent: "center"
+    justifyContent: "center",
   },
-  buttonContainer: {
-    borderBottomColor: "#F5FCFF",
-    backgroundColor: "white",
-    borderRadius: 30,
-    borderBottomWidth: 1,
-    height: 45,
-    marginBottom: 20,
-    alignItems: "center"
-  }
 });

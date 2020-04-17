@@ -20,25 +20,26 @@ class EventItem extends React.Component {
     const event = this.props.event;
     return (
       <View style={styles.main_container}>
-        <Image style={styles.image} source={require("../images/rblogo.png")} />
-        {/* event.image ca serait cool a la place du logo de rb partout mais wallah ca marche pas */}
+        <Image
+          style={styles.image}
+          source={{
+            uri: "https://img.icons8.com/cute-clipart/64/000000/calendar",
+          }}
+        />
         <View style={styles.content_container}>
           <View style={styles.header_container}>
-            <Text style={styles.title_text}>Titre : {event.titre}</Text>
-            <Text style={styles.vote_text}>Lieu : {event.lieu} </Text>
+            <Text style={styles.title_text}>{event.titre}</Text>
           </View>
           <View style={styles.description_container}>
-            <Text style={styles.description_text} numberOfLines={6}>
-              Nombre d'agents de sécurité : {event.nbagents}
+            <Text style={styles.description_text} numberOfLines={3}>
+              {event.description}
             </Text>
-            <Text style={styles.description_text} numberOfLines={6}>
-              Nombre de navettes : {event.nbnavettes}
-            </Text>
-
             {/* La propriété numberOfLines permet de couper un texte si celui-ci est trop long, il suffit de définir un nombre maximum de ligne */}
           </View>
           <View style={styles.date_container}>
-            <Text style={styles.date_text}>Le : {event.date}</Text>
+            <Text style={styles.date}>
+              Le : {event.date} à {event.lieu}{" "}
+            </Text>
           </View>
         </View>
       </View>
@@ -54,43 +55,42 @@ const styles = StyleSheet.create({
   image: {
     width: 120,
     height: 120,
-    margin: 5,
-    backgroundColor: "gray",
+    margin: 2,
   },
   content_container: {
     flex: 1,
-    margin: 5,
+    margin: 2,
+    height: 120,
   },
   header_container: {
-    flex: 3,
+    flex: 2,
     flexDirection: "row",
+    marginTop: 8,
   },
   title_text: {
     fontWeight: "bold",
     fontSize: 20,
     flex: 1,
     flexWrap: "wrap",
-    paddingRight: 5,
+    color: "#677179",
   },
-  vote_text: {
+  date: {
     fontWeight: "bold",
-    fontSize: 18,
-    color: "#666666",
+    fontSize: 15,
+    color: "#677179",
   },
   description_container: {
-    flex: 7,
-    marginTop: 3,
+    flex: 4,
   },
   description_text: {
     fontStyle: "italic",
-    color: "#666666",
+    color: "#677179",
+    margin: 3,
   },
   date_container: {
     flex: 1,
-  },
-  date_text: {
-    textAlign: "right",
-    fontSize: 14,
+    marginBottom: 20,
+    justifyContent: "flex-start",
   },
 });
 

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Button,
 } from "react-native";
 import firebase from "firebase";
 
@@ -14,13 +15,16 @@ export default class AjoutEvent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      titreEvent: "",
-      dateEvent: "",
-      lieuEvent: "",
-      agents: "",
-      navettes: "",
+      titreEvent: "No name",
+      dateEvent: "No date",
+      lieuEvent: "?",
+      agents: "0",
+      navettes: "0",
+      description: "...",
       id: 0,
       evenement: "",
+      people: "",
+      login: "",
     };
   }
 
@@ -32,7 +36,7 @@ export default class AjoutEvent extends React.Component {
     });
   };
 
-  _createEvent() {
+  _createEvent = () => {
     try {
       firebase
         .database()
@@ -43,97 +47,130 @@ export default class AjoutEvent extends React.Component {
           lieu: this.state.lieuEvent,
           nbagents: this.state.agents,
           nbnavettes: this.state.navettes,
+          description: this.state.description,
+          people: this.state.people,
+          login: firebase.auth().currentUser.email,
         })
         .catch((error) => {
           alert(error.message);
         });
+      alert("Event créé !");
+      this.props.navigation.navigate("Accueil");
     } catch (error) {
       alert(error);
     }
-    alert("Event créé !");
-  }
+  };
 
   render() {
     console.log(this.state.id);
     return (
-      <View style={styles.container}>
-        <Text style={styles.titreApp}>Création d'un Evenement</Text>
+      <View style={styles.main_container}>
+        <View style={styles.row_container}>
+          <Text style={styles.t2}> Création d'un Evenement </Text>
+        </View>
         <View style={styles.row}>
-          <Text> Nom de l'event : </Text>
+          <Text style={styles.t1}> Nom de l'event : </Text>
           <TextInput
-            style={styles.input}
-            placeholder="Nom event"
+            style={styles.t1}
+            placeholder="Event Title"
             underlineColorAndroid="transparent"
             onChangeText={(titreEvent) => this.setState({ titreEvent })}
           />
         </View>
         <View style={styles.row}>
-          <Text> Lieu </Text>
+          <View style={styles.row}>
+            <Text style={styles.t1}> Lieu :</Text>
+            <TextInput
+              style={styles.t1}
+              placeholder="Place"
+              underlineColorAndroid="transparent"
+              onChangeText={(lieuEvent) => this.setState({ lieuEvent })}
+            />
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.t1}> Date : </Text>
+            <TextInput
+              style={styles.t1}
+              placeholder="../../...."
+              underlineColorAndroid="transparent"
+              onChangeText={(dateEvent) => this.setState({ dateEvent })}
+            />
+          </View>
+        </View>
+        <View style={{ margin: 10 }}>
+          <Text style={styles.t1}> Description :</Text>
           <TextInput
-            style={styles.input}
-            placeholder="Lieu"
+            style={styles.description}
+            placeholder="Short resume"
             underlineColorAndroid="transparent"
-            onChangeText={(lieuEvent) => this.setState({ lieuEvent })}
+            backgroundColor="white"
+            onChangeText={(description) => this.setState({ description })}
           />
         </View>
         <View style={styles.row}>
-          <Text> Date : </Text>
+          <Text style={styles.t1}> Combien de personnes ? </Text>
           <TextInput
-            style={styles.input}
-            placeholder="../../...."
+            style={styles.t1}
+            placeholder="300"
             underlineColorAndroid="transparent"
-            onChangeText={(dateEvent) => this.setState({ dateEvent })}
+            onChangeText={(people) => this.setState({ people })}
           />
         </View>
         <View style={styles.row}>
-          <Text> Agents </Text>
+          <Text style={styles.t1}> Sécurité : </Text>
           <TextInput
-            style={styles.input}
-            placeholder="Agents sécu"
+            style={styles.t1}
+            placeholder="X agents"
             underlineColorAndroid="transparent"
             onChangeText={(agents) => this.setState({ agents })}
           />
         </View>
         <View style={styles.row}>
-          <Text> Navettes : </Text>
+          <Text style={styles.t1}> Navettes : </Text>
           <TextInput
-            style={styles.input}
-            placeholder="1 pour 40 pers"
+            style={styles.t1}
+            placeholder="1/40 pax"
             underlineColorAndroid="transparent"
             onChangeText={(navettes) => this.setState({ navettes })}
           />
         </View>
-        <TouchableOpacity
-          style={styles.buton}
-          onPress={() => {
-            this._createEvent();
-          }}
-        >
-          <View>
-            <Text>Créer mon event</Text>
+        <View style={{ margin: 15 }}>
+          <View style={styles.but}>
+            <Button
+              title="Créer mon event"
+              color="#008B8B"
+              onPress={() => {
+                this._createEvent();
+              }}
+            />
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buton}
-          onPress={() => {
-            this.props.navigation.navigate("Simulator");
-          }}
-        >
-          <View>
-            <Text>Accéder au simulateur</Text>
+          <View style={styles.but}>
+            <Button
+              style={styles.but}
+              title="Utiliser le simulateur"
+              color="#008B8B"
+              onPress={() => {
+                this.props.navigation.navigate("Simulator");
+              }}
+            />
           </View>
-        </TouchableOpacity>
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  main_container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#E8F6F3",
+    justifyContent: "center",
+  },
+  row_container: {
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 20,
   },
   buton: {
     justifyContent: "center",
@@ -143,13 +180,32 @@ const styles = StyleSheet.create({
     backgroundColor: "blue",
     margin: 30,
   },
+
+  but: {
+    margin: 10,
+  },
   row: {
     flexDirection: "row",
     alignItems: "center",
     marginLeft: 20,
   },
-  titreApp: {
-    margin: 20,
-    fontSize: 30,
+  t2: {
+    textAlign: "center",
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#008B8B",
+  },
+  t1: {
+    textAlign: "center",
+    margin: 2,
+    fontSize: 16,
+  },
+  description: {
+    textAlign: "center",
+    margin: 10,
+    fontSize: 16,
+    height: 100,
+    width: 250,
+    borderRadius: 10,
   },
 });

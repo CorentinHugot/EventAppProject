@@ -49,7 +49,7 @@ const EventStack = createStackNavigator(
     Accueil: {
       screen: Home,
       navigationOptions: {
-        headerLeft: null,
+        headerLeft: () => null,
         title: "Accueil",
       },
     },

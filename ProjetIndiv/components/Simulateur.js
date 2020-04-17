@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  TextInput
+  TextInput,
 } from "react-native";
 
 export default class AjoutEvent extends React.Component {
@@ -15,39 +15,49 @@ export default class AjoutEvent extends React.Component {
     this.state = {
       nbpersonne: "",
       agent: "",
-      navettes: ""
+      navettes: "",
     };
   }
 
   _calculSimu() {
-    this.setState({ agent: this.state.nbpersonne / 50 + 2 }); //Math.round()
-    this.setState({ navettes: this.state.nbpersonne / 40 });
+    this.setState({
+      agent:
+        "Nous te recommandons " +
+        (this.state.nbpersonne / 50 + 2) +
+        " agents et",
+    }); //Math.round()
+    this.setState({ navettes: this.state.nbpersonne / 40 + " navettes." });
     this.setState({
       simu:
         "Nous te recommandons " +
         this.state.agent +
         "agents et " +
         this.state.navettes +
-        "navettes (40pers/bus) pour ton event !"
+        "navettes (40pers/bus) pour ton event !",
     });
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.titreApp}>
-          Cette page t'assiste dans le choix du nombre d'agents de sécurités et
-          de navettes pour ton event !
-        </Text>
-        <View style={styles.box}>
-          <Text> Combien de personnes prévois tu à ton evenement ?</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Nb personnes"
-            underlineColorAndroid="transparent"
-            onChangeText={nbpersonne => this.setState({ nbpersonne })}
-          />
-        </View>
+      <View style={styles.main_container}>
+        <Text style={styles.t2}> Simulateur </Text>
+
+        <Text style={styles.t1}>Assistant d'évenement :</Text>
+        <View
+          style={{
+            height: 2,
+            width: 500,
+            backgroundColor: "#008B8B",
+            margin: 20,
+          }}
+        ></View>
+        <Text style={styles.t1}> Combien de personnes prévois tu ?</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Nb personnes"
+          underlineColorAndroid="transparent"
+          onChangeText={(nbpersonne) => this.setState({ nbpersonne })}
+        />
         <TouchableOpacity
           style={styles.buton}
           onPress={() => {
@@ -55,12 +65,21 @@ export default class AjoutEvent extends React.Component {
           }}
         >
           <View>
-            <Text>Lancer le simulateur</Text>
+            <Text style={{ color: "white" }}>Lancer le simulateur</Text>
           </View>
         </TouchableOpacity>
-        <View>
-          <Text>Agents : {this.state.agent}</Text>
-          <Text>Navettes : {this.state.navettes}</Text>
+        <View
+          style={{
+            height: 2,
+            width: 500,
+            backgroundColor: "#008B8B",
+            margin: 20,
+          }}
+        ></View>
+        <Text style={styles.t1}> Il te faudra donc : </Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.t1}>{this.state.agent}</Text>
+          <Text style={styles.t1}>{this.state.navettes}</Text>
         </View>
       </View>
     );
@@ -68,34 +87,38 @@ export default class AjoutEvent extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  main_container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5F5F5"
+    backgroundColor: "#E8F6F3",
+    justifyContent: "center",
+  },
+  input: {
+    margin: 10,
   },
   buton: {
     justifyContent: "center",
     alignItems: "center",
     width: 150,
     height: 50,
-    backgroundColor: "blue",
-    margin: 30
+    backgroundColor: "#008B8B",
+    margin: 10,
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginLeft: 20
-  },
-  box: {
-    alignItems: "center",
-    textAlign: "center",
-    justifyContent: "center",
     marginLeft: 20,
-    width: 200
   },
-  titreApp: {
-    margin: 20,
-    fontSize: 20
-  }
+  t2: {
+    textAlign: "center",
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#008B8B",
+    marginBottom: 20,
+  },
+  t1: {
+    textAlign: "center",
+    margin: 2,
+    fontSize: 16,
+  },
 });

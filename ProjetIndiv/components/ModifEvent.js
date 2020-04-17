@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Button,
 } from "react-native";
 import firebase from "firebase";
 
@@ -21,6 +22,9 @@ export default class ModifEvent extends React.Component {
       navettes: "",
       id: 0,
       evenement: "",
+      idEvent: "",
+      description: "",
+      people: "",
     };
   }
 
@@ -32,89 +36,158 @@ export default class ModifEvent extends React.Component {
     });
   };
 
-  _modifEvent = () => {
-    firebase.database().ref("event/idevent").update({
+  UNSAFE_componentWillMount = () => {
+    // je viens chercher l'id de l'event dans lequel je me trouve
+    try {
+      const ref = firebase.database().ref("events");
+      ref
+        .orderByChild("titre")
+        .equalTo(this.props.navigation.state.params.titreEvent)
+        .once("value", (snapshot) => {
+          result = snapshot.val();
+          key = Object.keys(result);
+          this.setState({ idEvent: key });
+        });
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  _modifEvent = (ev) => {
+    firebase.database().ref(ev).update({
       titre: this.state.titreEvent,
       date: this.state.dateEvent,
       lieu: this.state.lieuEvent,
       nbagents: this.state.agents,
       nbnavettes: this.state.navettes,
+      description: this.state.description,
+      people: this.state.people,
     });
+    alert("Evenement Modifié");
+    this.props.navigation.navigate("ListeEvent");
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.titreApp}>
-          Tu souhaites modifer l'event{" "}
-          {this.props.navigation.state.params.titreEvent} ?
-        </Text>
+      <View style={styles.main_container}>
+        <View style={styles.row_container}>
+          <Text style={styles.t2}>
+            Tu souhaites modifer l'event{" "}
+            {this.props.navigation.state.params.titreEvent} ?
+          </Text>
+        </View>
         <View style={styles.row}>
-          <Text> Nom de l'event : </Text>
+          <Text style={styles.t1}> Nom de l'event : </Text>
           <TextInput
-            style={styles.input}
-            placeholder="Nom event"
+            style={styles.t1}
+            placeholder="Event Title"
             underlineColorAndroid="transparent"
             onChangeText={(titreEvent) => this.setState({ titreEvent })}
           />
         </View>
         <View style={styles.row}>
-          <Text> Lieu </Text>
+          <View style={styles.row}>
+            <Text style={styles.t1}> Lieu :</Text>
+            <TextInput
+              style={styles.t1}
+              placeholder="Place"
+              underlineColorAndroid="transparent"
+              onChangeText={(lieuEvent) => this.setState({ lieuEvent })}
+            />
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.t1}> Date : </Text>
+            <TextInput
+              style={styles.t1}
+              placeholder="../../...."
+              underlineColorAndroid="transparent"
+              onChangeText={(dateEvent) => this.setState({ dateEvent })}
+            />
+          </View>
+        </View>
+        <View style={{ margin: 10 }}>
+          <Text style={styles.t1}> Description :</Text>
           <TextInput
-            style={styles.input}
-            placeholder="Lieu"
+            style={styles.description}
+            placeholder="Short resume"
             underlineColorAndroid="transparent"
-            onChangeText={(lieuEvent) => this.setState({ lieuEvent })}
+            backgroundColor="white"
+            onChangeText={(description) => this.setState({ description })}
           />
         </View>
         <View style={styles.row}>
-          <Text> Date : </Text>
+          <Text style={styles.t1}> How many people : </Text>
           <TextInput
-            style={styles.input}
-            placeholder="../../...."
+            style={styles.t1}
+            placeholder="300"
             underlineColorAndroid="transparent"
-            onChangeText={(dateEvent) => this.setState({ dateEvent })}
+            onChangeText={(people) => this.setState({ people })}
           />
         </View>
         <View style={styles.row}>
-          <Text> Agents </Text>
+          <Text style={styles.t1}> Sécurité : </Text>
           <TextInput
-            style={styles.input}
-            placeholder="Agents sécu"
+            style={styles.t1}
+            placeholder="X agents"
             underlineColorAndroid="transparent"
             onChangeText={(agents) => this.setState({ agents })}
           />
         </View>
         <View style={styles.row}>
-          <Text> Navettes : </Text>
+          <Text style={styles.t1}> Navettes : </Text>
           <TextInput
-            style={styles.input}
-            placeholder="1 pour 40 pers"
+            style={styles.t1}
+            placeholder="1/40 pax"
             underlineColorAndroid="transparent"
             onChangeText={(navettes) => this.setState({ navettes })}
           />
         </View>
-        <TouchableOpacity
-          style={styles.buton}
-          onPress={() => {
-            this._modifEvent();
-          }}
-        >
-          <View>
-            <Text>Update mon event</Text>
-          </View>
-        </TouchableOpacity>
+        <View style={styles.but}>
+          <Button
+            style={styles.but}
+            title="Modifier cet event"
+            color="#008B8B"
+            onPress={() => {
+              this._modifEvent("events/" + this.state.idEvent);
+            }}
+          />
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  main_container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#E8F6F3",
+    justifyContent: "center",
+  },
+  t2: {
+    textAlign: "center",
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "#008B8B",
+    marginBottom: 20,
+  },
+  t1: {
+    textAlign: "center",
+    margin: 2,
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  but: {
+    margin: 10,
+    width: "90%",
+  },
+  description: {
+    textAlign: "center",
+    margin: 10,
+    fontSize: 16,
+    height: 100,
+    width: 250,
+    borderRadius: 10,
   },
   buton: {
     justifyContent: "center",
