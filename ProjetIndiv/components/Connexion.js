@@ -13,6 +13,9 @@ import {
 import navigation from "react-navigation";
 import { BorderlessButton } from "react-native-gesture-handler";
 import firebase from "firebase";
+import * as Permissions from "expo-permissions";
+import * as Notifications from "expo-notifications";
+import * as Constants from "expo-constants";
 
 const firebaseConfig = {
   apiKey: "AIzaSyASIl4z25jSFdccwybL4ptG1rPUVRCIId0",
@@ -37,6 +40,28 @@ export default class Connexion extends React.Component {
       password: "",
     };
   }
+
+  componentDidMount() {
+    this.registerForPushNotifications();
+  }
+
+  registerForPushNotifications = async () => {
+    //Check for existing permissions
+    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    let finalStatus = status;
+    // Si il existe pas de permission alors on en demande une
+    if (status !== "granted") {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+    // si le mec refuse
+    if (finalStatus !== "granted") {
+      return;
+    }
+    // on recupère le token d'autorisation de notifications
+    let token = await Notifications.getExpoPushTokenAsync();
+    console.log(token);
+  };
 
   signup = () => {
     try {

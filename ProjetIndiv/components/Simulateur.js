@@ -76,7 +76,6 @@ export default class AjoutEvent extends React.Component {
             margin: 20,
           }}
         ></View>
-        <Text style={styles.t1}> Il te faudra donc : </Text>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.t1}>{this.state.agent}</Text>
           <Text style={styles.t1}>{this.state.navettes}</Text>

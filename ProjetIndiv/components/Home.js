@@ -28,7 +28,6 @@ export default class Home extends React.Component {
             <Text style={styles.t1}>{this.state.mail}</Text>
           </View>
         </View>
-        <Text style={styles.t1}>Que faire maintenant ?</Text>
         <TouchableOpacity
           style={styles.viewContainer}
           onPress={() => {
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
   },
   viewContainer: {
     height: 150,
-    width: "90%",
+    width: "100%",
     marginRight: "auto",
     marginLeft: "auto",
     marginTop: 50,
@@ -91,7 +90,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: "#008B8B",
-    borderRadius: 25,
     shadowOffset: { width: 2, height: 2 },
     shadowColor: "black",
     shadowOpacity: 0.2,
