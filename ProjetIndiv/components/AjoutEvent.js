@@ -28,6 +28,7 @@ export default class AjoutEvent extends React.Component {
     };
   }
 
+  // recupération du nombre d'evenement déja créés pour stocker le prochain event a créer au bon id
   UNSAFE_componentWillMount = () => {
     const ref = firebase.database().ref("events");
     ref.on("value", (snapshot) => {
@@ -36,6 +37,7 @@ export default class AjoutEvent extends React.Component {
     });
   };
 
+  //fonction de creation d'evenement
   _createEvent = () => {
     try {
       firebase

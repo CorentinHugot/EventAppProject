@@ -44,8 +44,7 @@ export default class EventDetail extends React.Component {
     }
   };
 
-  componentWillUnmount = () => {};
-
+  //fonction de création d'un evenement
   _deleteEvent = (ev) => {
     try {
       firebase

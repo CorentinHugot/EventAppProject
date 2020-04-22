@@ -6,5 +6,6 @@ export default {
   storageBucket: "projetindivensc.appspot.com",
   messagingSenderId: "1026864132271",
   appId: "1:1026864132271:web:8121be6425726ed153a45a",
-  measurementId: "G-L6LB131YPD"
+  measurementId: "G-L6LB131YPD",
 };
+//inutile

@@ -12,6 +12,7 @@ export default class Home extends React.Component {
     };
   }
 
+  //recupération du mail de l'utilisateur pour l'afficher en acceuil
   UNSAFE_componentWillMount() {
     this.setState({
       mail: this.props.navigation.state.params.mail,

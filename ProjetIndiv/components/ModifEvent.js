@@ -28,6 +28,7 @@ export default class ModifEvent extends React.Component {
     };
   }
 
+  //recupération de l'identifiant de l'evenement
   UNSAFE_componentWillMount = () => {
     const ref = firebase.database().ref("events");
     ref.on("value", (snapshot) => {
@@ -53,6 +54,7 @@ export default class ModifEvent extends React.Component {
     }
   };
 
+  //fonction de modification de l'evenement
   _modifEvent = (ev) => {
     firebase.database().ref(ev).update({
       titre: this.state.titreEvent,

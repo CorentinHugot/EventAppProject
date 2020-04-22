@@ -17,6 +17,7 @@ import * as Permissions from "expo-permissions";
 import * as Notifications from "expo-notifications";
 import * as Constants from "expo-constants";
 
+// instanciation de firebase et initialisation de la BDD en ligne
 const firebaseConfig = {
   apiKey: "AIzaSyASIl4z25jSFdccwybL4ptG1rPUVRCIId0",
   authDomain: "projetindivensc.firebaseapp.com",
@@ -28,6 +29,7 @@ const firebaseConfig = {
   measurementId: "G-L6LB131YPD",
 };
 
+//initialisation de la bdd avec condition si initialisation deja effectuée
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
@@ -41,46 +43,49 @@ export default class Connexion extends React.Component {
     };
   }
 
-  registerForPushNotificationsAsync = async () => {
-    const { status: existingStatus } = await Permissions.getAsync(
-      Permissions.NOTIFICATIONS
-    );
-    let finalStatus = existingStatus;
+  // fonction de notification bien codée qui malheureusement rencontre une confrontation avec ma version d'expo
 
-    // only ask if permissions have not already been determined, because
-    // iOS won't necessarily prompt the user a second time.
-    if (existingStatus !== "granted") {
-      // Android remote notification permissions are granted during the app
-      // install, so this will only ask on iOS
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      finalStatus = status;
-    }
+  // registerForPushNotificationsAsync = async () => {
+  //   const { status: existingStatus } = await Permissions.getAsync(
+  //     Permissions.NOTIFICATIONS
+  //   );
+  //   let finalStatus = existingStatus;
 
-    // Stop here if the user did not grant permissions
-    if (finalStatus !== "granted") {
-      return;
-    }
+  //   // only ask if permissions have not already been determined, because
+  //   // iOS won't necessarily prompt the user a second time.
+  //   if (existingStatus !== "granted") {
+  //     // Android remote notification permissions are granted during the app
+  //     // install, so this will only ask on iOS
+  //     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+  //     finalStatus = status;
+  //   }
 
-    try {
-      // Get the token that uniquely identifies this device
-      let token = await Notifications.getExpoPushTokenAsync();
-      console.log(token);
+  //   // Stop here if the user did not grant permissions
+  //   if (finalStatus !== "granted") {
+  //     return;
+  //   }
 
-      // POST the token to your backend server from where you can retrieve it to send push notifications.
-      firebase
-        .database()
-        .ref("users/" + this.currentUser.uid + "/push_token")
-        .set(token);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   try {
+  //     // Get the token that uniquely identifies this device
+  //     let token = await Notifications.getExpoPushTokenAsync();
+  //     console.log(token);
 
-  async componentDidMount() {
-    this.currentUser = await firebase.auth().currentUser;
-    await this.registerForPushNotificationsAsync();
-  }
+  //     // POST the token to your backend server from where you can retrieve it to send push notifications.
+  //     firebase
+  //       .database()
+  //       .ref("users/" + this.currentUser.uid + "/push_token")
+  //       .set(token);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
+  // async componentDidMount() {
+  //   this.currentUser = await firebase.auth().currentUser;
+  //   await this.registerForPushNotificationsAsync();
+  // }
+
+  //fonction d'inscription d'un utilisateur
   signup = () => {
     try {
       firebase
@@ -95,6 +100,7 @@ export default class Connexion extends React.Component {
     }
   };
 
+  //fonction de connexion d'un utilisateur
   signin = () => {
     try {
       firebase

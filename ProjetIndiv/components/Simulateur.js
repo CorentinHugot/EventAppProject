@@ -19,6 +19,7 @@ export default class AjoutEvent extends React.Component {
     };
   }
 
+  //fonction de simulation permettant de calculer le nombre de navettes et d'agents de sécurité en fonction du nombre de personnes attendues
   _calculSimu() {
     this.setState({
       agent:
